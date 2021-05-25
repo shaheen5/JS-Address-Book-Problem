@@ -1,16 +1,5 @@
 class AddressBook {
-    //constructor
-    constructor(firstName,lastName,address,city,state,zipCode,phoneNumber,email){
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-    }
-
+   
     get firstName() { return this._firstName;}
     set firstName(firstName) {
         let firstNameRegex = RegExp('^[A-Z]{1}[a-z]{3,}$');
@@ -82,14 +71,55 @@ class AddressBook {
                 this.phoneNumber+", Email: "+this.email+" ]";
 
     }
+    //add contacts
+    addContacts() {
+        try{
+            let firstName = prompt("Enter First Name : ");
+            this.firstName = firstName;
+            let lastName = prompt("Enter Last Name : ");
+            this.lastName = lastName;
+            let address = prompt("Enter Address : ");
+            this.address = address;
+            let city = prompt("Enter City : ");
+            this.city = city;
+            let state = prompt("Enter State : ");
+            this.state = state;
+            let zipcode = prompt("Enter Zip Code : ");
+            this.zipCode = zipcode;
+            let phoneNumber = prompt("Enter Phone Number : ");
+            this.phoneNumber = phoneNumber;
+            let email = prompt("Enter Email Id : ");
+            this.email = email;
+        }catch(e){
+            console.log(e);
+            return;
+        }   
+    }
 }
 
-let addressbook = new AddressBook("Shaheen","Miya","Gokul Nagar Society","Pune","Maharashtra",411001,
-                    9922123990,"shaheen@gmail.com");
-console.log(addressbook.toString());
-try {
-    addressbook.firstName = "sa";
-    console.log(addressbook.firstName);  
-} catch (error) {
-   console.log(error); 
-}
+//main
+const prompt = require('prompt-sync')();
+let addressBookArray = new Array();       //declare addressbook array
+let choice;
+do{
+    console.log("\n************************OPTIONS***********************\n");
+    console.log("1] Add Contacts\n2] View Contacts In AddressBook\n3] Exit");
+    choice = parseInt(prompt("Enter Your Choice : "));
+    switch(choice){
+        case 1 : let addressbook = new AddressBook();      //declare addressbok object
+                 addressbook.addContacts();
+                 if(addressbook.firstName != undefined && addressbook.lastName != undefined && 
+                    addressbook.address != undefined && addressbook.city != undefined && addressbook.state
+                    != undefined && addressbook.zipCode != undefined && addressbook.phoneNumber
+                    != undefined && addressbook.email != undefined){
+                        addressBookArray.push(addressbook.toString());
+                 }
+                 break;
+        case 2 :  console.log(addressBookArray);
+                  break;
+        case 3 : return;
+        default : console.log("Invalid Input!");
+    }
+}while(choice != 3);
+
+
